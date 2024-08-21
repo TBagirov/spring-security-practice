@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: practic-security
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/security_practice
+    username: postgres
+    password: PosTer231
+  app:
+    jwtSecret: 414f3e4acd70df7ea0a51cfee87c4ee4ddfcac6c972a61d61621091051709640c4a8139393f479e541024a3baa0ebdcd35c80b2ec755cf1996f584fa79968d64315cb3688afd07faf6e312c353949506323e7d2dca15887d6947e65d3b982349dbc89faeb6e0f24788378cfa539165606486b1e8500939122395cfb663d0f5d167834c7ddd29a2b0e49f31edbf6c1b2f034743dc977395a9f58ae9464004672b45e9dd091354fac4adc97e6ca106d4cb5ed6ce76e21e23f2d26cac182cf1d0b38796907d27617d7cc87d1a1bc74bb84db3c859439a48e44c3227476c70f818fd5d6ddbd83df495f3775e588b92305830e70a55ceb14595e9dc565f9dbdef534c
+    jwtExpirationMs: 900000
+
+  flyway:
+    clean-on-validation-error: true
+    cleanDisabled: false
+
+logging:
+  level:
+    org:
+      springframework:
+        security: Debug
+        hibernate:
+          sql: DEBUG
+      security:
+        practic: Debug
+
