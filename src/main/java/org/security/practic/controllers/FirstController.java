@@ -52,7 +52,10 @@ public class FirstController {
 
         try {
             authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(
+                            signInRequest.getUsername(),
+                            signInRequest.getPassword())
+                    );
         } catch (AuthenticationException ex) {
             Map<String, Object> map = new HashMap<>();
             map.put("message", ex.getMessage());
@@ -60,13 +63,11 @@ public class FirstController {
         }
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtUtils.generateTokenFromUsername(userDetails);
 
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-
         SignInResponse response = new SignInResponse(token, userDetails.getUsername(), roles);
 
         return ResponseEntity.ok(response);

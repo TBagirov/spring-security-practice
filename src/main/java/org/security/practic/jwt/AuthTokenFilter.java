@@ -31,10 +31,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
         logger.debug("AuthTokenFilter calles for URI: {}", request.getRequestURI());
+
         try{
             String jwt = parseJwt(request);
             if(jwt != null && jwtUtils.validateJwtToken(jwt)){
+
                 String username = jwtUtils.getUsernameFromJwtToken(jwt);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -47,7 +50,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 logger.debug("Roles from JWT: {}", userDetails.getAuthorities());
 
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+                
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 

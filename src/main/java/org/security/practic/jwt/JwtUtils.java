@@ -22,6 +22,9 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
+    private static final String BEARER_PREFIX = "Bearer ";
+    private static final String AUTH_HEADER_NAME = "Authorization";
+
     @Value("${spring.app.jwtSecret}")
     private String jwtSecret;
 
@@ -29,12 +32,12 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String getJwtFromHeader(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
+        String authHeader = request.getHeader(AUTH_HEADER_NAME);
 
         logger.debug("Authorization Header: {}", authHeader);
 
-        if(authHeader != null && authHeader.startsWith("Bearer "))
-            return authHeader.substring(7);
+        if(authHeader != null && authHeader.startsWith(BEARER_PREFIX))
+            return authHeader.substring(BEARER_PREFIX.length());
         return null;
     }
 
